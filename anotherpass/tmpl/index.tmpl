@@ -1,0 +1,49 @@
+<? INC Header.tmpl ?>
+
+<form method="post" action="<? VAR URIPrefix TOP ?><? VAR ModPath ?>add">
+    <? INC _csrf_check.tmpl ?>
+    <div class="section">
+        <h3>Add Password</h3>
+        <div class="sectionbg">
+            <div class="sectionbody">
+                <div class="subsection full">
+                    <div class="inputlabel">Password:</div>
+                    <input type="password" name="pass" size="40" />
+                </div>
+                <div class="subsection full">
+                    <div class="inputlabel">Remainder:</div>
+                    <input type="text" name="remainder" size="40" />
+                </div>
+                <div class="subsection submitline">
+                    <input type="submit" name="add" value="Add Password" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<? IF !PassLineLoop ?>
+<p>You have no passwords.</p>
+<? ELSE ?>
+
+<table class="data">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Remainder</th>
+            <th>Password</th>
+        </tr>
+    </thead>
+    <tbody>
+        <? LOOP PassLineLoop ?>
+        <tr class="<? IF __EVEN__ ?>evenrow<? ELSE ?>oddrow<? ENDIF ?>">
+            <td>[<a href="<? VAR ModPath ?>delete?line=<? VAR Line ESC=URL,HTML ?>">del</a>]</td>
+            <td><? VAR Remainder ?></td>
+            <td><? VAR PassHash ?></td>
+        </tr>
+        <? ENDLOOP ?>
+    </tbody>
+</table>
+<? ENDIF ?>
+
+<? INC Footer.tmpl ?>
